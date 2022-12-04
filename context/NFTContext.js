@@ -1,7 +1,7 @@
+import axios from 'axios';
+import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import Web3Modal from 'web3modal';
-import { ethers } from 'ethers';
-import axios from 'axios';
 
 import { MarketAddress, MarketAddressABI } from './constants';
 
@@ -17,7 +17,10 @@ export const NFTProvider = ({ children }) => {
   const fetchNFTs = async () => {
     setIsLoadingNFT(false);
 
-    const provider = new ethers.providers.JsonRpcProvider();
+    const { ethereum } = window;
+
+    // const provider = new ethers.providers.JsonRpcProvider();
+    const provider = new ethers.providers.Web3Provider(ethereum);
     const contract = fetchContract(provider);
 
     const data = await contract.fetchMarketItems();
